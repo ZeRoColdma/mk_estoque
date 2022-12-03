@@ -8,13 +8,8 @@ const router = Router();
 
 const authUser = new AuthUser();
 
-router.get("/hello", (request, response) => {
-  return response.json({ message: "Hello World" });
-});
-
-//! Sesseion
-
 router.use(userRouter);
+
 router.post("/session", authUser.signIn);
 
 router.use(productsRouter);

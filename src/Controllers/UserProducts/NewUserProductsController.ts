@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import { v4 } from "uuid";
 import connection from "../../database/connection";
 
 class UserProductsController {
@@ -19,6 +20,7 @@ class UserProductsController {
       const { user_id, product_id } = request.query;
 
       const user_product = {
+        user_product_id: v4(),
         user_id,
         product_id,
         quantity,

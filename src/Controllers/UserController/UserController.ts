@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import connection from "../../database/connection";
 import bcrypt from "bcrypt";
+import { v4 } from "uuid";
 
 class UserController {
   async index(request: Request, response: Response) {
@@ -21,6 +22,7 @@ class UserController {
       }
       const hashedPassword = await bcrypt.hash(password, 10);
       const data = await connection("users").insert({
+        id: v4(),
         name,
         email,
         password: hashedPassword,
@@ -28,6 +30,7 @@ class UserController {
 
       return response.status(201).json({ name, email });
     } catch (error) {
+      console.log(error);
       return response.status(400).json({ error: "Error creating new user" });
     }
   }
@@ -45,6 +48,29 @@ class UserController {
     }
   }
 
+  async update(request: Request, response: Response) {
+    try {
+      const { id } = request.params;
+      const { name, email, password } = request.body;
+      const user = await connection("users").where("id", id).first();
+
+      if (!user) {
+        return response.status(400).json({ error: "User not found" });
+      }
+
+      const hashedPassword = await bcrypt.hash(password, 10);
+      const data = await connection("users").where("id", id).update({
+        name,
+        email,
+        password: hashedPassword,
+      });
+
+      return response.status(201).json({ name, email });
+    } catch (error) {
+      return response.status(400).json({ error: "Error updating user" });
+    }
+  }
+
   async delete(request: Request, response: Response) {
     try {
       const { id } = request.params;
@@ -55,7 +81,7 @@ class UserController {
       await connection("users").where("id", id).delete();
       return response.status(204).send();
     } catch (error) {
-      return response.status(400).json({ error: "Error deleting user" });
+      return response.status(400).json({ error: error });
     }
   }
 }

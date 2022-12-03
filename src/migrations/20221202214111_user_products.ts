@@ -4,18 +4,18 @@ import { v4 } from "uuid";
 export async function up(knex: Knex): Promise<void> {
   return knex.schema.createTable("user_products", (table) => {
     table
-      .string("product_id")
+      .string("product_id", 300)
       .references("id")
       .inTable("products")
       .onDelete("CASCADE")
       .onUpdate("CASCADE");
     table
-      .string("user_id")
+      .string("user_id", 300)
       .references("id")
       .inTable("users")
       .onDelete("CASCADE")
       .onUpdate("CASCADE");
-    table.string("user_product_id").primary().defaultTo(v4());
+    table.string("user_product_id").primary();
     table.integer("quantity").notNullable();
     table.timestamp("created_at").defaultTo(knex.fn.now());
     table.timestamp("updated_at").defaultTo(knex.fn.now());

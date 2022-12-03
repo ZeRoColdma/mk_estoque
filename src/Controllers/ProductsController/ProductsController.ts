@@ -16,15 +16,6 @@ class ProductsController {
     try {
       const { name, price, description } = request.body;
 
-      const productExists = await connection("products")
-        .select("*")
-        .where("name", name)
-        .first();
-
-      if (productExists) {
-        return response.status(400).json({ message: "product already exists" });
-      }
-
       const product = {
         id: v4(),
         name,
@@ -35,6 +26,7 @@ class ProductsController {
       return response.status(201).json(product);
     } catch (error) {
       console.log(error);
+      
       return response.status(401).json(error);
     }
   }
