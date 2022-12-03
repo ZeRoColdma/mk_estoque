@@ -2,9 +2,10 @@ import { Request, Response } from "express";
 import connection from "../../database/connection";
 import bcrypt from "bcrypt";
 import { v4 } from "uuid";
+import { User } from "../../interfaces/UserInterfaces/index";
 
 class UserController {
-  async index(request: Request, response: Response) {
+  async index(request: Request, response: Response): Promise<Response> {
     try {
       const users = await connection("users").select("*");
       return response.status(200).json(users);
@@ -13,7 +14,7 @@ class UserController {
     }
   }
 
-  async create(request: Request, response: Response) {
+  async create(request: Request, response: Response): Promise<Response> {
     try {
       const { name, email, password } = request.body;
       const user = await connection("users").where("email", email).first();
@@ -35,7 +36,7 @@ class UserController {
     }
   }
 
-  async show(request: Request, response: Response) {
+  async show(request: Request, response: Response): Promise<Response> {
     try {
       const { id } = request.params;
       const user = await connection("users").where("id", id).first();
@@ -48,7 +49,7 @@ class UserController {
     }
   }
 
-  async update(request: Request, response: Response) {
+  async update(request: Request, response: Response): Promise<Response> {
     try {
       const { id } = request.params;
       const { name, email, password } = request.body;
@@ -71,7 +72,7 @@ class UserController {
     }
   }
 
-  async delete(request: Request, response: Response) {
+  async delete(request: Request, response: Response): Promise<Response> {
     try {
       const { id } = request.params;
       const user = await connection("users").where("id", id).first();

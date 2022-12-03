@@ -3,7 +3,7 @@ import { v4 } from "uuid";
 import connection from "../../database/connection";
 
 class UserProductsController {
-  async index(request: Request, response: Response) {
+  async index(request: Request, response: Response): Promise<Response> {
     try {
       const user_products = await connection("user_products")
         .select("*")
@@ -14,7 +14,7 @@ class UserProductsController {
     }
   }
 
-  async create(request: Request, response: Response) {
+  async create(request: Request, response: Response): Promise<Response> {
     try {
       const { quantity } = request.body;
       const { user_id, product_id } = request.query;
@@ -33,7 +33,7 @@ class UserProductsController {
     }
   }
 
-  async show(request: Request, response: Response) {
+  async show(request: Request, response: Response): Promise<Response> {
     const { user_product_id } = request.query;
 
     try {
@@ -46,7 +46,7 @@ class UserProductsController {
     }
   }
 
-  async update(request: Request, response: Response) {
+  async update(request: Request, response: Response): Promise<Response> {
     try {
       const { user_id, user_product_id } = request.query;
       const { quantity } = request.body;
@@ -63,7 +63,7 @@ class UserProductsController {
     }
   }
 
-  async delete(request: Request, response: Response) {
+  async delete(request: Request, response: Response): Promise<Response> {
     try {
       const { user_product_id } = request.query;
       console.log(user_product_id);

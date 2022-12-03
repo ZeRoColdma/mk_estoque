@@ -3,7 +3,7 @@ import { v4 } from "uuid";
 import connection from "../../database/connection";
 
 class ProductsController {
-  async index(request: Request, response: Response) {
+  async index(request: Request, response: Response): Promise<Response> {
     try {
       const products = await connection("products").select("*");
       return response.status(200).json(products);
@@ -12,7 +12,7 @@ class ProductsController {
     }
   }
 
-  async create(request: Request, response: Response) {
+  async create(request: Request, response: Response): Promise<Response> {
     try {
       const { name, price, description } = request.body;
 
@@ -26,12 +26,12 @@ class ProductsController {
       return response.status(201).json(product);
     } catch (error) {
       console.log(error);
-      
+
       return response.status(401).json(error);
     }
   }
 
-  async update(request: Request, response: Response) {
+  async update(request: Request, response: Response): Promise<Response> {
     try {
       const { id } = request.params;
       const { name, price, description } = request.body;
@@ -47,7 +47,7 @@ class ProductsController {
     }
   }
 
-  async show(request: Request, response: Response) {
+  async show(request: Request, response: Response): Promise<Response> {
     try {
       const { id } = request.params;
       const product = await connection("products").where("id", id).first();
@@ -57,7 +57,7 @@ class ProductsController {
     }
   }
 
-  async delete(request: Request, response: Response) {
+  async delete(request: Request, response: Response): Promise<Response> {
     try {
       const { id } = request.params;
       await connection("products").where("id", id).delete();
