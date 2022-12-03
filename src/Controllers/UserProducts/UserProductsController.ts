@@ -3,6 +3,7 @@ import { v4 } from "uuid";
 import connection from "../../database/connection";
 
 class UserProductsController {
+
   async index(request: Request, response: Response): Promise<Response> {
     try {
       const user_products = await connection("user_products")

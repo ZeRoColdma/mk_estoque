@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { UserProductsController } from "../Controllers/UserProducts/NewUserProductsController";
+import { UserProductsController } from "../Controllers/UserProducts/UserProductsController";
 const userProductsRouter = Router();
 
 const userProductsController = new UserProductsController();
@@ -8,10 +8,7 @@ const userProductsController = new UserProductsController();
 userProductsRouter.get("/user_products/:id", userProductsController.index);
 userProductsRouter.get("/user_products/:id", userProductsController.show);
 
-userProductsRouter.post(
-  "/user_products/products",
-  userProductsController.create,
-);
+userProductsRouter.post("/user_products/products", userProductsController.create);
 userProductsRouter.put("/user_products", userProductsController.update);
 userProductsRouter.delete("/user_products", userProductsController.delete);
 
