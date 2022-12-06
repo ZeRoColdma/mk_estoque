@@ -36,7 +36,7 @@ class AuthUser {
       .where("email", email)
       .update({ user_session_token: token });
 
-    return response.json({ token });
+    return response.json({ email, token });
   }
 }
 
