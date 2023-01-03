@@ -10,7 +10,7 @@ const config: { [key: string]: Knex.Config } = {
     connection: {
       database: "mk_estoque",
       user: "postgres",
-      password: "postgres",
+      password: "docker",
       port: 5432,
     },
     pool: {
