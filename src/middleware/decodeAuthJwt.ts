@@ -17,7 +17,14 @@ export function checkJwt(
 
   try {
     const decoded = jwt.verify(token, data.secret);
-    console.log(decoded);
+    // check if the token is not expired
+    const { exp } = decoded as any;
+    const now = Math.floor(Date.now() / 1000);
+
+    if (now > exp) {
+      return response.status(401).json({ error: "Token expired" });
+    }
+
     return next();
   } catch {
     return response.status(401).json({ error: "Token invalid" });

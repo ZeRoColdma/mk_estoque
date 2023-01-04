@@ -8,14 +8,15 @@ class ProductsController {
       const products = await connection("products").select("*");
       return response.status(200).json(products);
     } catch (error) {
-      return response.status(404).json({ message: "error" });
+      return response
+        .status(404)
+        .json({ message: "Erro ao gerar lista de produtos" });
     }
   }
 
   async create(request: Request, response: Response): Promise<Response> {
     try {
       const { name, price, description } = request.body;
-
       const product = {
         id: v4(),
         name,
@@ -25,9 +26,9 @@ class ProductsController {
       await connection("products").insert(product);
       return response.status(201).json(product);
     } catch (error) {
-      console.log(error);
-
-      return response.status(401).json(error);
+      return response
+        .status(401)
+        .json({ error: "Produto com mesmo nome ja registrado" });
     }
   }
 
@@ -43,7 +44,9 @@ class ProductsController {
       await connection("products").where("id", id).update(product);
       return response.status(204).json(product);
     } catch (error) {
-      return response.status(400).json({ message: "error" });
+      return response
+        .status(400)
+        .json({ message: "Erro ao atualizar os campos do produto" });
     }
   }
 
@@ -53,7 +56,7 @@ class ProductsController {
       const product = await connection("products").where("id", id).first();
       return response.status(201).json(product);
     } catch (error) {
-      return response.status(404).json({ message: "error" });
+      return response.status(404).json({ message: "Erro ao exibir produto" });
     }
   }
 
@@ -64,7 +67,9 @@ class ProductsController {
       return response.status(204).send();
     } catch (error) {
       console.log(error);
-      return response.status(400).json({ message: "error" });
+      return response
+        .status(400)
+        .json({ message: "Erro ao deletar produto selecionado" });
     }
   }
 }
