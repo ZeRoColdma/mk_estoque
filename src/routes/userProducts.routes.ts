@@ -7,10 +7,11 @@ const userProductsController = new UserProductsController();
 
 //! New User Products
 userProductsRouter.get(
-  "/user_products/:id",
+  "/user_products/:user_id",
   checkJwt,
   userProductsController.index,
 );
+
 userProductsRouter.get(
   "/user_products/:id",
   checkJwt,

@@ -17,16 +17,23 @@ export function checkJwt(
 
   try {
     const decoded = jwt.verify(token, data.secret);
-    // check if the token is not expired
     const { exp } = decoded as any;
     const now = Math.floor(Date.now() / 1000);
 
     if (now > exp) {
       return response.status(401).json({ error: "Token expired" });
     }
-
+    
     return next();
   } catch {
     return response.status(401).json({ error: "Token invalid" });
   }
+}
+
+export function retriveUserId(tokenJwt: any) {
+  const authHeader = tokenJwt;
+  const [, token] = authHeader.split(" ");
+  const decoded = jwt.verify(token, data.secret);
+  const { id } = decoded as any;
+  return id;
 }

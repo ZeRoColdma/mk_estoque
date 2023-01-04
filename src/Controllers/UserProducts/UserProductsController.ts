@@ -1,14 +1,16 @@
 import { Request, Response } from "express";
 import { v4 } from "uuid";
+import { retriveUserId } from "../../middleware/decodeAuthJwt";
 import connection from "../../database/connection";
 
 class UserProductsController {
-
   async index(request: Request, response: Response): Promise<Response> {
+    console.log(request.query.user_id);
+
     try {
       const user_products = await connection("user_products")
         .select("*")
-        .where("user_id", request.params.id);
+        .where("user_id", request.query.user_id);
       return response.status(200).json(user_products);
     } catch {
       return response.status(403).json({ message: "error" });
@@ -18,16 +20,30 @@ class UserProductsController {
   async create(request: Request, response: Response): Promise<Response> {
     try {
       const { quantity } = request.body;
-      const { user_id, product_id } = request.query;
+      const { product_id } = request.query;
+
+      const user_id = retriveUserId(request.headers.authorization);
 
       const user_product = {
         user_product_id: v4(),
-        user_id,
+        user_id: user_id,
         product_id,
         quantity,
       };
-      await connection("user_products").insert(user_product);
-      return response.status(201).json(user_product);
+
+      const user_productExists = await connection("user_products")
+        .select("*")
+        .where("user_id", user_id)
+        .andWhere("product_id", product_id);
+
+      if (user_productExists.length > 0) {
+        return response
+          .status(400)
+          .json({ message: "Produto já existe no seu estoque" });
+      } else {
+        await connection("user_products").insert(user_product);
+        return response.status(201).json(user_product);
+      }
     } catch (error) {
       console.log(error);
       return response.status(400).json({ message: error });

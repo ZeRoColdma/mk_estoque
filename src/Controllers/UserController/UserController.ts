@@ -2,7 +2,6 @@ import { Request, Response } from "express";
 import connection from "../../database/connection";
 import bcrypt from "bcrypt";
 import { v4 } from "uuid";
-import { User } from "../../interfaces/UserInterfaces/index";
 
 class UserController {
   async index(request: Request, response: Response): Promise<Response> {
