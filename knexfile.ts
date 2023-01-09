@@ -1,6 +1,4 @@
 import type { Knex } from "knex";
-import dotenv from "dotenv";
-dotenv.config();
 
 // Update with your config settings.
 
@@ -8,9 +6,10 @@ const config: { [key: string]: Knex.Config } = {
   development: {
     client: "pg",
     connection: {
+      host: "mk-estoque",
       database: "mk_estoque",
       user: "postgres",
-      password: "docker",
+      password: "postgres",
       port: 5432,
     },
     pool: {

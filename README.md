@@ -5,3 +5,9 @@ npm install knex -g
 
 # Npm init Migrations
 npm knex migrate:latest
+
+
+# Nao Paguei
+
+## Inter
+## Atacadao
