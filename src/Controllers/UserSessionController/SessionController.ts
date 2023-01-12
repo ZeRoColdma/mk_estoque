@@ -8,6 +8,11 @@ import connection from "../../database/connection";
 class AuthUser {
   async signIn(request: Request, response: Response) {
     const { email, password } = request.body;
+
+    if (!email || !password) {
+      return response.status(400).json({ error: "Missing email or password" });
+    }
+
     const user = await connection("users").where("email", email).first();
 
     if (!user) {
