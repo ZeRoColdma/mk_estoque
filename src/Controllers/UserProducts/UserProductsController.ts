@@ -5,12 +5,10 @@ import connection from "../../database/connection";
 
 class UserProductsController {
   async index(request: Request, response: Response): Promise<Response> {
-    console.log(request.query.user_id);
-
     try {
       const user_products = await connection("user_products")
         .select("*")
-        .where("user_id", request.query.user_id);
+        .where("user_id", request.params.user_id);
       return response.status(200).json(user_products);
     } catch {
       return response.status(403).json({ message: "error" });
