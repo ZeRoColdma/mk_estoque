@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import connection from "../../database/connection";
-import bcrypt from "bcrypt";
+import { saltPassword } from "../../utils/RenderPassword";
 import { v4 } from "uuid";
 
 class UserController {
@@ -14,13 +14,14 @@ class UserController {
   }
 
   async create(request: Request, response: Response): Promise<Response> {
+    const { name, email, password } = request.body;
     try {
-      const { name, email, password } = request.body;
       const user = await connection("users").where("email", email).first();
       if (user) {
         return response.status(400).json({ error: "User already exists" });
       }
-      const hashedPassword = await bcrypt.hash(password, 10);
+      const hashedPassword = saltPassword(password);
+
       const data = await connection("users").insert({
         id: v4(),
         name,
@@ -58,7 +59,7 @@ class UserController {
         return response.status(400).json({ error: "User not found" });
       }
 
-      const hashedPassword = await bcrypt.hash(password, 10);
+      const hashedPassword = saltPassword(password);
       const data = await connection("users").where("id", id).update({
         name,
         email,

@@ -7,7 +7,7 @@ const config: { [key: string]: Knex.Config } = {
     client: "pg",
     connection: {
       host: "localhost",
-      database: "mk_estoque",
+      database: "estoque",
       user: "postgres",
       password: "postgres",
       port: 5432,
