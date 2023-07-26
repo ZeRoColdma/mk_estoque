@@ -3,6 +3,7 @@ import connection from "../../database/connection";
 import { saltPassword } from "../../utils/RenderPassword";
 import { v4 } from "uuid";
 
+
 class UserController {
   async index(request: Request, response: Response): Promise<Response> {
     try {
@@ -31,7 +32,6 @@ class UserController {
 
       return response.status(201).json({ name, email });
     } catch (error) {
-      console.log(error);
       return response.status(400).json({ error: "Error creating new user" });
     }
   }
