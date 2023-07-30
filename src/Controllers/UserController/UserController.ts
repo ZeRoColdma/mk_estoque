@@ -21,10 +21,9 @@ class UserController {
       if (user) {
         return response.status(400).json({ error: "User already exists" });
       }
-      const hashedPassword = saltPassword(password);
+      const hashedPassword = await saltPassword(password);
 
       const data = await connection("users").insert({
-        id: v4(),
         name,
         email,
         password: hashedPassword,

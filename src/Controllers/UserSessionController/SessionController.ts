@@ -26,9 +26,7 @@ class AuthUser {
 
     const token = sign(
       {
-        id: user.id,
-        name: user.name,
-        email: user.email,
+        id: user.id
       },
       data.secret,
       {
@@ -36,11 +34,6 @@ class AuthUser {
         expiresIn: "1d",
       },
     );
-
-    await connection("users")
-      .where("email", email)
-      .update({ user_session_token: token });
-
     return response.json({ token });
   }
 }

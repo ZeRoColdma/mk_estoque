@@ -18,7 +18,6 @@ class ProductsController {
     try {
       const { name, price, description } = request.body;
       const product = {
-        id: v4(),
         name,
         price,
         description,
@@ -66,7 +65,6 @@ class ProductsController {
       await connection("products").where("id", id).delete();
       return response.status(204).send();
     } catch (error) {
-      console.log(error);
       return response
         .status(400)
         .json({ message: "Erro ao deletar produto selecionado" });

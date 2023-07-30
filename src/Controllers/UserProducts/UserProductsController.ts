@@ -18,12 +18,12 @@ class UserProductsController {
   async create(request: Request, response: Response): Promise<Response> {
     try {
       const { quantity } = request.body;
-      const { product_id } = request.query;
+      const { product_id, user_product_id } = request.query;
 
       const user_id = retriveUserId(request.headers.authorization);
 
       const user_product = {
-        user_product_id: v4(),
+        user_product_id,
         user_id: user_id,
         product_id,
         quantity,
@@ -43,7 +43,6 @@ class UserProductsController {
         return response.status(201).json(user_product);
       }
     } catch (error) {
-      console.log(error);
       return response.status(400).json({ message: error });
     }
   }
@@ -81,7 +80,6 @@ class UserProductsController {
   async delete(request: Request, response: Response): Promise<Response> {
     try {
       const { user_product_id } = request.query;
-      console.log(user_product_id);
       await connection("user_products")
         .where("user_product_id", user_product_id)
         .delete();
