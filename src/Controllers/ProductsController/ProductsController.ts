@@ -1,5 +1,4 @@
 import { Request, Response } from "express";
-import { v4 } from "uuid";
 import connection from "../../database/connection";
 
 class ProductsController {
@@ -16,11 +15,12 @@ class ProductsController {
 
   async create(request: Request, response: Response): Promise<Response> {
     try {
-      const { name, price, description } = request.body;
+      const { name, price, description, uri } = request.body;
       const product = {
         name,
         price,
         description,
+        uri
       };
       await connection("products").insert(product);
       return response.status(201).json(product);

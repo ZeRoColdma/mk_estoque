@@ -7,6 +7,7 @@ export async function up(knex: Knex): Promise<void> {
     table.string("name").notNullable().unique();
     table.double("price").notNullable();
     table.string("description").notNullable();
+    table.string("uri", 455);
   });
 }
 
