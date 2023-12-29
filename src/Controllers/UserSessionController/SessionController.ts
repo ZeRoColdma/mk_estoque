@@ -3,7 +3,7 @@ import { Request, Response } from "express";
 import bcrypt from "bcrypt";
 const data = require("../../config/auth.json");
 
-import connection from "../../database/connection";
+import connection from "../../../database/connection";
 
 class AuthUser {
   async signIn(request: Request, response: Response) {

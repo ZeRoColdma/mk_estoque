@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { v4 } from "uuid";
 import { retriveUserId } from "../../middleware/decodeAuthJwt";
-import connection from "../../database/connection";
+import connection from "../../../database/connection";
 
 class UserProductsController {
   async index(request: Request, response: Response): Promise<Response> {

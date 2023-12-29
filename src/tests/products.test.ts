@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import  mocked  from 'ts-jest';
-import connection from "../database/connection";
+import connection from "../../database/connection";
 import {ProductsController} from '../Controllers/ProductsController/ProductsController';
 
 

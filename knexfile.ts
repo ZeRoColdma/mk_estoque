@@ -1,7 +1,5 @@
 import type { Knex } from "knex";
 
-// Update with your config settings.
-
 const config: { [key: string]: Knex.Config } = {
   development: {
     client: "pg",
@@ -18,7 +16,7 @@ const config: { [key: string]: Knex.Config } = {
     },
     migrations: {
       tableName: "knex_migrations",
-      directory: "./src/migrations",
+      directory: "./migrations",
     },
   },
 
@@ -37,7 +35,7 @@ const config: { [key: string]: Knex.Config } = {
     },
     migrations: {
       tableName: "knex_migrations",
-      directory: "./src/migrations",
+      directory: "./migrations",
     },
   },
 };

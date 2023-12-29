@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import connection from "../../database/connection";
+import connection from "../../../database/connection";
 
 class ProductsController {
   async index(request: Request, response: Response): Promise<Response> {

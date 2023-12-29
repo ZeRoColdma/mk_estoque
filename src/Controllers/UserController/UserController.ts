@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
-import connection from "../../database/connection";
+import connection from "../../../database/connection";
 import { saltPassword } from "../../utils/RenderPassword";
-import { v4 } from "uuid";
 
 
 class UserController {
@@ -15,7 +14,7 @@ class UserController {
   }
 
   async create(request: Request, response: Response): Promise<Response> {
-    const { name, email, password } = request.body;
+    const { name, email, password, career_level } = request.body;
     try {
       const user = await connection("users").where("email", email).first();
       if (user) {
@@ -27,6 +26,7 @@ class UserController {
         name,
         email,
         password: hashedPassword,
+        career_level
       });
 
       return response.status(201).json({ name, email });
@@ -51,7 +51,7 @@ class UserController {
   async update(request: Request, response: Response): Promise<Response> {
     try {
       const { id } = request.params;
-      const { name, email, password } = request.body;
+      const { name, email, password, career_level } = request.body;
       const user = await connection("users").where("id", id).first();
 
       if (!user) {
@@ -63,6 +63,7 @@ class UserController {
         name,
         email,
         password: hashedPassword,
+        career_level
       });
 
       return response.status(201).json({ name, email });
