@@ -15,13 +15,11 @@ class ProductsController {
 
   async create(request: Request, response: Response): Promise<Response> {
     try {
-      const { name, price, description, uri } = request.body;
+      const { name, price, description } = request.body;
       const product = {
         name,
         price,
-        description,
-        uri
-      };
+        description      };
       await connection("products").insert(product);
       return response.status(201).json(product);
     } catch (error) {

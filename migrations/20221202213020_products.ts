@@ -5,9 +5,8 @@ export async function up(knex: Knex): Promise<void> {
   return knex.schema.createTable("products", (table) => {
     table.increments("id").primary();
     table.string("name").notNullable().unique();
-    table.double("price").notNullable();
+    table.double("price", 10, 2).notNullable();
     table.string("description").notNullable();
-    table.string("uri", 455);
   });
 }
 

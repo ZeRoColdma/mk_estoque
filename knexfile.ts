@@ -18,6 +18,7 @@ const config: { [key: string]: Knex.Config } = {
       tableName: "knex_migrations",
       directory: "./migrations",
     },
+    
   },
 
   production: {
